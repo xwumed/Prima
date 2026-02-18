@@ -1,0 +1,11 @@
+
+# 单序列测试配置
+study_dir: "/home/xuewei/MRI/test/single_series_test"
+output_dir: "/home/xuewei/Prima/test/output_single_series"
+
+# Model configuration paths
+tokenizer_model_config: "/home/xuewei/Prima/test/trained_models/tokenizer_model/config.json"
+prima_model_config: "/home/xuewei/Prima/test/trained_models/prima_config.json"
+
+batch_size: 1
+device: "cuda"

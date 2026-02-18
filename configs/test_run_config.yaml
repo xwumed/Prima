@@ -1,0 +1,12 @@
+
+# Study and output directories
+study_dir: "/home/xuewei/MRI/test/GLI-01-0065-0"
+output_dir: "/home/xuewei/Prima/test/output_GLI-01-0065-0"
+
+# Model configuration paths
+tokenizer_model_config: "/home/xuewei/Prima/test/trained_models/tokenizer_model/config.json"
+prima_model_config: "/home/xuewei/Prima/test/trained_models/prima_config.json"
+
+# Optional parameters
+batch_size: 1
+device: "cuda"
