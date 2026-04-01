@@ -1,0 +1,8 @@
+# Prima feature extraction config for EGD dataset
+study_dir: "/home/xuewei/MRI/EGD_flat"
+output_dir: "/home/xuewei/MRI/EGD_flat_prima"
+tokenizer_model_config: "/home/xuewei/MRI/Prima/test/trained_models/tokenizer_model/config.json"
+prima_model_config: "/home/xuewei/MRI/Prima/test/trained_models/prima_config.json"
+batch_size: 1
+device: "cuda"
+num_workers: 0

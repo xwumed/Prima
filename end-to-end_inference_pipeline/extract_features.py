@@ -699,13 +699,22 @@ if __name__ == "__main__":
         print(f"Output root: {base_output_dir}")
         print(f"Models will be loaded ONCE and reused across all cases.")
 
-        success, failed = 0, []
+        success, skipped, failed = 0, 0, []
         with BatchExtractor(base_config, batch_log_handler=batch_log_handler) as bex:
-            for case_dir in case_dirs:
+            for idx, case_dir in enumerate(case_dirs):
+                # ── Skip logic: check if features.pt already exists ──
+                out_dir = base_output_dir / case_dir.name
+                existing_feats = list(out_dir.glob("*_features.pt")) if out_dir.exists() else []
+                if existing_feats:
+                    print(f"[{idx+1}/{len(case_dirs)}] {case_dir.name}: already done, skipping")
+                    skipped += 1
+                    success += 1
+                    continue
+
                 print(f"\n{'='*60}")
-                print(f"Processing: {case_dir.name}")
+                print(f"[{idx+1}/{len(case_dirs)}] Processing: {case_dir.name}")
                 try:
-                    bex.process(case_dir, base_output_dir / case_dir.name)
+                    bex.process(case_dir, out_dir)
                     success += 1
                 except Exception as e:
                     logging.error(f"  [FAIL] {case_dir.name}: {e}")
@@ -713,7 +722,7 @@ if __name__ == "__main__":
 
         batch_log_handler.close()
         print(f"\n{'='*60}")
-        print(f"Batch complete: {success}/{len(case_dirs)} succeeded.")
+        print(f"Batch complete: {success}/{len(case_dirs)} succeeded ({skipped} skipped).")
         print(f"Full batch log: {batch_log_path}")
         if failed:
             print(f"Failed cases: {failed}")
